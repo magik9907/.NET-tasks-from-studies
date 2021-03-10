@@ -26,6 +26,8 @@ namespace FizzBuzzConsole
                         message = String.Concat(message, "fizz");
                     if (CheckModFive(input))
                         message = String.Concat(message, "buzz");
+                    if (message == "")
+                        message = String.Concat(message, input);
                 }
                 catch (Exception)
                 {
