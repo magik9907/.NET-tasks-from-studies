@@ -1,0 +1,26 @@
+﻿@page
+@model net_task.Pages.LastSearchModel
+@{
+    ViewData["Title"] = "Last Search";
+}
+
+<div>
+    @if (Model.FizzBuzz != null)
+    {
+        <p>
+            Searching number:
+            @Model.FizzBuzz.Number
+        </p>
+        <p>
+            Date:@Model.FizzBuzz.Date
+        </p>
+        <p>
+            Result: @Model.FizzBuzz.Result
+        </p>
+    }
+    else
+    {
+        <p>No data</p>
+    }
+
+</div>
