@@ -11,4 +11,9 @@
         <span asp-validation-for="FizzBuzz.Number" class="text-danger font-weight-bolder"></span>
         <button type="submit">submit</button>
     </form>
+
+    @if(Model.FizzBuzz != null)
+    {
+        <p>Result: @Model.FizzBuzz.Result</p>
+    }
 </div>

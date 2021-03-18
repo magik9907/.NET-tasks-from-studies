@@ -33,7 +33,7 @@ namespace net_task.Pages
             FizzBuzz.Check();
             FizzBuzz.Date = DateTime.Now;
             HttpContext.Session.SetString("FizzBuzz", JsonConvert.SerializeObject(FizzBuzz));
-            return RedirectToPage("/LastSearch");
+            return Page();
         }
     }
 }
