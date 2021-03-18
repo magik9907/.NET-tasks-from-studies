@@ -49,7 +49,7 @@ namespace AddressBook.Pages
 
             HttpContext.Session.SetString("SessionAddress",
             JsonConvert.SerializeObject(Address));
-            return RedirectToPage("./Address");
+            return RedirectToPage("./AddressList");
 
         }
     }

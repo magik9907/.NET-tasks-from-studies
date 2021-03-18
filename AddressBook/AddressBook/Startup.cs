@@ -48,13 +48,13 @@ namespace AddressBook
                 app.UseHsts();
             }
 
-            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
