@@ -12,7 +12,7 @@
         <button type="submit">submit</button>
     </form>
 
-    @if(Model.FizzBuzz != null)
+    @if(Model.FizzBuzz != null && Model.FizzBuzz.Valid)
     {
         <p>Result: @Model.FizzBuzz.Result</p>
     }
