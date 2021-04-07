@@ -1,0 +1,49 @@
+﻿@page
+@model AddressBook.Pages.Address.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>AddressDB</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AddressDB.Street" class="control-label"></label>
+                <input asp-for="AddressDB.Street" class="form-control" />
+                <span asp-validation-for="AddressDB.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressDB.City" class="control-label"></label>
+                <input asp-for="AddressDB.City" class="form-control" />
+                <span asp-validation-for="AddressDB.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressDB.ZipCode" class="control-label"></label>
+                <input asp-for="AddressDB.ZipCode" class="form-control" />
+                <span asp-validation-for="AddressDB.ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressDB.Country" class="control-label"></label>
+                <input asp-for="AddressDB.Country" class="form-control" />
+                <span asp-validation-for="AddressDB.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

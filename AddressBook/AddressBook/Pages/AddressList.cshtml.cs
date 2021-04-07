@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using AddressBook.Models;
+
 namespace AddressBook.Pages
 {
     public class AddressModel : PageModel
     {
-        public Address Address;
+        public AddressBook.Models.Address Address;
         public void OnGet()
         {
             var SessionAddress = HttpContext.Session.GetString("SessionAddress");
             if (SessionAddress != null)
-                Address = JsonConvert.DeserializeObject<Address>(SessionAddress);
+                Address = JsonConvert.DeserializeObject<AddressBook.Models.Address>(SessionAddress);
         }
     }
 }

@@ -5,17 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AddressBook.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using AddressBook.Data;
+using AddressBook.Models;
 
 namespace AddressBook.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly PeopleContext _context;
+        public IList<Person> People { get; set; }
         [BindProperty]
-        public Address Address
+        public AddressBook.Models.Address Address
         {
             get;
             set;
@@ -27,9 +30,10 @@ namespace AddressBook.Pages
             set;
         }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, PeopleContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public void OnGet()
@@ -38,6 +42,7 @@ namespace AddressBook.Pages
             {
                 Name = "User";
             }
+            People = _context.Person.ToList();
         }
 
         public IActionResult OnPost()

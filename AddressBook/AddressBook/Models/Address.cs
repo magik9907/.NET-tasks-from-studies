@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AddressBook.Models
 {
     public class Address
     {
+        public int Id { get; set; }
         [Display(Name = "Twoja ulubiona ulica")]
         [StringLength(60, MinimumLength = 3)]
         [Required(ErrorMessage = "pole obowiazkowe")]
@@ -23,7 +25,5 @@ namespace AddressBook.Models
         [Display(Name = "numer")]
         [Required(ErrorMessage = "pole obowiazkowe")]
         public int Number { get; set; }
-
-
     }
 }

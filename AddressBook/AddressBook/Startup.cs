@@ -8,7 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
+using AddressBook.Data;
 namespace AddressBook
 {
     public class Startup
@@ -31,6 +32,12 @@ namespace AddressBook
                 options.Cookie.IsEssential = true;
             });
 
+
+            services.AddDbContext<PeopleContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("AddressBookDB"));
+            });
+            services.AddRazorPages();
             services.AddMemoryCache();
         }
 
