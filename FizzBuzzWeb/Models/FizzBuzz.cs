@@ -8,65 +8,47 @@ namespace net_task.Models
 {
     public class FizzBuzz
     {
+        public int Id { set; get; }
         [Display(Name = "Number [1-1000]")]
         [Required(ErrorMessage = "number is required")]
         [Range(1, 1000, ErrorMessage = "Number between 1-1000")]
         public int Number { set; get; }
         public DateTime Date { set; get; }
-        public string Result { set; get; }
-        public bool Valid { set; get; }
+        public int State { set; get; } = -1;
+
         public void Check()
         {
-            Regex regex = new Regex(@"[^-0-9]+");
-            string message;
-
-            message = "";
+            State = 0;
             try
             {
                 if (Number < 1 && Number > 1000)
                     throw new Exception("Number not between 1-1000");
 
-                if (CheckModThree(Number))
-                    message = String.Concat(message, "Fizz");
-                if (CheckModFive(Number))
-                    message = String.Concat(message, "Buzz");
-                if (message == "")
-                {
-                    message = "The number:" + Number + " does not meet the FizzBuzz requirements";
-                    Valid = false;
-                }
-                else Valid = true;
+                if (Number % 3 == 0)
+                    State += 1;
+                if (Number % 5 == 0)
+                    State += 2;
             }
             catch (Exception e)
             {
-                Valid = false;
-                message = e.Message;
-            }
-            finally
-            {
-                Result = message;
+                State = 4;
             }
         }
 
-        private bool CheckModThree(int value)
+        public string GetMessage()
         {
-            char[] charArray = value.ToString().ToCharArray();
-            int sum = 0;
-            foreach (var charElem in charArray)
+            if (State == -1) Check();
+            string mess = "";
+            switch (State)
             {
-                if (charElem != '-')
-                    sum += int.Parse(charElem.ToString());
+                case 0: mess = "The number:" + Number + " does not meet the FizzBuzz requirements"; break;
+                case 1: mess = "Fizz"; break;
+                case 2: mess = "Buzz"; break;
+                case 3: mess = "FizzBuzz"; break;
+                case 4: mess = "problem"; break;
             }
 
-            return (sum % 3 == 0 && sum != 0) ? true : false;
-        }
-
-        private bool CheckModFive(int num)
-        {
-            string value = Number.ToString();
-            if (value.CompareTo("0") == 0) return false;
-            string lastChar = value.Substring(value.Length - 1);
-            return (lastChar == "0" || lastChar == "5") ? true : false;
+            return mess;
         }
 
     }
