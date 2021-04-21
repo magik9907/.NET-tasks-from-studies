@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ServisInjection.Data;
+using ServisInjection.Middleware;
 namespace ServisInjection
 {
     public class Startup
@@ -51,7 +52,9 @@ namespace ServisInjection
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //Custom middleware
+            app.UseBrowserValidate();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
