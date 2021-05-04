@@ -12,8 +12,8 @@
         <button type="submit">submit</button>
     </form>
 
-    @if(Model.FizzBuzz != null && Model.FizzBuzz.Valid)
+    @if(Model.FizzBuzz != null && Model.FizzBuzz.State != -1)
     {
-        <p>Result: @Model.FizzBuzz.Result</p>
+        <p>Result: @Model.FizzBuzz.GetMessage()</p>
     }
 </div>

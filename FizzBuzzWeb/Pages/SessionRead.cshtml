@@ -1,7 +1,7 @@
 ﻿@page
 @model net_task.Pages.LastSearchModel
 @{
-    ViewData["Title"] = "Last Search";
+    ViewData["Title"] = "Session read";
 }
 
 <div>
@@ -15,7 +15,7 @@
             Date:@Model.FizzBuzz.Date
         </p>
         <p>
-            Result: @Model.FizzBuzz.Result
+            Result: @Model.FizzBuzz.GetMessage()
         </p>
     }
     else
