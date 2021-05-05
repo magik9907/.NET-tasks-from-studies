@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace net_task.Models
 {
     public class FizzBuzz
     {
+        public string UserID{ get; set; }
         public int Id { set; get; }
         [Display(Name = "Number [1-1000]")]
         [Required(ErrorMessage = "number is required")]

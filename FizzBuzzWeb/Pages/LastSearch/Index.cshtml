@@ -25,11 +25,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.FizzBuzz[0].State)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FizzBuzz[0].UserID)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        
+
         @foreach (var item in Model.FizzBuzz)
         {
             <tr>
@@ -47,9 +50,20 @@
                     @item.GetMessage()
                 </td>
                 <td>
-                    |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @if (Model.UserId == item.UserID)
+                    {
+                        <span>
+                            <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.Id"> Delete </a>
+                        </span>
+                    }
+                    else
+                    {
+                        <span> NoAccess</span>
+                    }
                 </td>
             </tr>
         }

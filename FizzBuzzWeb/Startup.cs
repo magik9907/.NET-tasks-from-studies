@@ -26,10 +26,14 @@ namespace net_task
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<FizzBuzzContext>(options => {
+            services.AddDbContext<FizzBuzzContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("FizzBuzzDB"));
             });
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/LastSearch");
+            });
             services.AddDistributedMemoryCache();
             services.AddSession();
         }
@@ -52,13 +56,18 @@ namespace net_task
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
         }
     }
+
+
+
 }

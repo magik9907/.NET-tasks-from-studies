@@ -7,34 +7,41 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using net_task.Data;
 using net_task.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace net_task.Pages.LastSearch
 {
     public class DeleteModel : PageModel
     {
         private readonly net_task.Data.FizzBuzzContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public DeleteModel(net_task.Data.FizzBuzzContext context)
+        public DeleteModel(net_task.Data.FizzBuzzContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
         public FizzBuzz FizzBuzz { get; set; }
+        string UserId;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("./Index");
             }
-
-            FizzBuzz = await _context.FizzBuzzes.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (FizzBuzz == null)
+          
+            UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            FizzBuzz = GetFromDB(id);
+           
+            if (FizzBuzz != null)
             {
-                return NotFound();
+                return RedirectToPage("./Index");
             }
+
             return Page();
         }
 
@@ -42,10 +49,11 @@ namespace net_task.Pages.LastSearch
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("./Index");
             }
 
-            FizzBuzz = await _context.FizzBuzzes.FindAsync(id);
+            UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            FizzBuzz = GetFromDB(id);
 
             if (FizzBuzz != null)
             {
@@ -54,6 +62,14 @@ namespace net_task.Pages.LastSearch
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private FizzBuzz GetFromDB(int? id)
+        {
+            return (from r in _context.FizzBuzzes
+                    where r.Id.Equals(id)
+                    && r.UserID.Equals(UserId)
+                    select r).FirstOrDefault();
         }
     }
 }

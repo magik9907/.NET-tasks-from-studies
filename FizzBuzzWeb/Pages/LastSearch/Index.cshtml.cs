@@ -7,23 +7,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using net_task.Data;
 using net_task.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace net_task.Pages.LastSearch
 {
     public class IndexModel : PageModel
     {
+        [ViewData]
+        public string UserId { get; set; }
         private readonly net_task.Data.FizzBuzzContext _context;
-
-        public IndexModel(net_task.Data.FizzBuzzContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+      
+        public IndexModel(net_task.Data.FizzBuzzContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public IList<FizzBuzz> FizzBuzz { get;set; }
+        public IList<FizzBuzz> FizzBuzz { get; set; }
 
         public async Task OnGetAsync()
         {
-            FizzBuzz = await _context.FizzBuzzes.OrderByDescending( fb => fb.Date).Take(10).ToListAsync();
+            UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            FizzBuzz = await _context.FizzBuzzes.OrderByDescending(fb => fb.Date).Take(20).ToListAsync();
         }
     }
 }
