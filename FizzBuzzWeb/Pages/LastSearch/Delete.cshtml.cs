@@ -37,7 +37,7 @@ namespace net_task.Pages.LastSearch
             UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             FizzBuzz = GetFromDB(id);
            
-            if (FizzBuzz != null)
+            if (FizzBuzz == null)
             {
                 return RedirectToPage("./Index");
             }

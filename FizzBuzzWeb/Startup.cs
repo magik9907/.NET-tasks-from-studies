@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using net_task.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace net_task
 {
@@ -33,7 +35,11 @@ namespace net_task
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeFolder("/LastSearch");
+            }).AddMvcOptions(options =>
+            {
+                options.Filters.Add(new AddAsyncIPFilter(Configuration));
             });
+
             services.AddDistributedMemoryCache();
             services.AddSession();
         }
@@ -56,10 +62,16 @@ namespace net_task
 
             app.UseRouting();
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+          ForwardedHeaders.XForwardedProto
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-            
+          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
