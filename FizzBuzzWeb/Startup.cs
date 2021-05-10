@@ -35,9 +35,6 @@ namespace net_task
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeFolder("/LastSearch");
-            }).AddMvcOptions(options =>
-            {
-                options.Filters.Add(new AddAsyncIPFilter(Configuration));
             });
 
             services.AddDistributedMemoryCache();
@@ -71,7 +68,7 @@ namespace net_task
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-          
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

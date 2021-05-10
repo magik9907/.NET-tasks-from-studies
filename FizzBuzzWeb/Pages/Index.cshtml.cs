@@ -11,9 +11,11 @@ using net_task.Models;
 using net_task.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using net_task.Filters;
 
 namespace net_task.Pages
 {
+    [AddAsyncIPFilterAttribute]
     public class IndexModel : PageModel
     {
         private readonly FizzBuzzContext _context;
@@ -21,8 +23,6 @@ namespace net_task.Pages
         private readonly UserManager<IdentityUser> _userManager;
         [BindProperty]
         public FizzBuzz FizzBuzz { get; set; }
-        [ViewData]
-        public string Filter { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, FizzBuzzContext context, UserManager<IdentityUser> userManager)
         {
@@ -50,12 +50,6 @@ namespace net_task.Pages
             _context.Add(FizzBuzz);
             _context.SaveChanges();
             return Page();
-        }
-
-        public override Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
-        {
-            Filter = HttpContext.Connection.RemoteIpAddress?.ToString();
-            return Task.CompletedTask;
         }
 
     }
